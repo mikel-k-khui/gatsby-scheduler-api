@@ -1,0 +1,59 @@
+{
+  "name": "gatsby-scheduler-api",
+  "version": "1.0.0",
+  "description": "Firebase backend for gatsby-scheduler",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikel-k-khui/gatsby-scheduler-api.git"
+  },
+  "keywords": [
+    "firebase",
+    "gatsby",
+    "typescript"
+  ],
+  "author": "Michael Chui, Qusai Saleh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikel-k-khui/gatsby-scheduler-api/issues"
+  },
+  "homepage": "https://github.com/mikel-k-khui/gatsby-scheduler-api#readme",
+  "dependencies": {
+    "firebase": "^7.15.0",
+    "firebase-admin": "^8.12.1"
+  },
+  "devDependencies": {
+    "@types/eslint": "^6.8.1",
+    "@types/firebase": "^3.2.1",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.13",
+    "@types/prettier": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.9",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md,scss,yaml,yml}": [
+      "prettier --write"
+    ]
+  }
+}
