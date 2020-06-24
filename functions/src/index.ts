@@ -4,8 +4,10 @@
  * You have to initialize the 'admin' object here, so any subsequent calls will be setup
  */
 import * as admin from 'firebase-admin'
+const serviceAccount = 
+
 admin.initializeApp({
-  credential: admin.credential.cert()
+  credential: admin.credential.cert(serviceAccount)
 })
 
 export { getAppointments, getResources } from './functions/callable'
