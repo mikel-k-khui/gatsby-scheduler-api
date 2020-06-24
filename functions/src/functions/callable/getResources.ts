@@ -6,6 +6,6 @@ import { https } from 'firebase-functions'
  * Then it should apply to the business logic module
  */
 
-export const getAppointments = https.onCall((data, context) => {
-  return
+export const getResources = https.onCall((data, context) => {
+  
 })

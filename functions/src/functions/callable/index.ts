@@ -1,2 +1,2 @@
 export { getAppointments } from './getAppointments'
-export { getUsers } from './getUsers'
+export { getResources } from './getResources'

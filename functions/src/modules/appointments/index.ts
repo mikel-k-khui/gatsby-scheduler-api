@@ -1,0 +1,2 @@
+export { Appointment } from './model
+'

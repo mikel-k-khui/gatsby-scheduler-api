@@ -1,1 +1,2 @@
-export { userCreated } from './firestoreTriggers'
+export { userCreated } from './triggers'
+export { getAppointments, getResources } from './callable'
