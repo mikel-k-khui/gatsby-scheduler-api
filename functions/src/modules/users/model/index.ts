@@ -20,9 +20,11 @@ export class User {
     return User.getDoc(id).get()
   }
 
-  async getByEmail(email: string): Any {
-    const userSnap: FirebaseFirestore.QuerySnapshot = await User.getCollection().where('email', '==', email).get()
-    
+  async getByEmail(email: string): Promise<any> {
+    const userSnap: FirebaseFirestore.QuerySnapshot = await User.getCollection()
+      .where('email', '==', email)
+      .get()
+
     return userSnap.size === 1 ? userSnap.docs[0].data() : undefined
   }
 }

@@ -1,7 +1,8 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "./node_modules/.bin/tslint -p tslint.json && ./node_modules/.bin/tsc",
+    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+    "build": "npm run lint && ./node_modules/.bin/tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

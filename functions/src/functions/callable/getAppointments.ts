@@ -7,5 +7,6 @@ import { https } from 'firebase-functions'
  */
 
 export const getAppointments = https.onCall((data, context) => {
-  return
+  console.log(data, context.auth?.uid, context.auth)
+  return data
 })

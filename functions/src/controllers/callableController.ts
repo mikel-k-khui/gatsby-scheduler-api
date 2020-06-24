@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { firestore } from 'firebase-admin'
-import { Logger } from '../utils'
+// import { Logger } from '../utils'
 
 export class CallableController {
   // field
@@ -29,7 +29,7 @@ export class CallableController {
     const results: FirebaseFirestore.WriteResult[] = await this.batch.commit()
     const endTime: Date = new Date()
 
-    Logger.log(
+    console.log(
       this.uuid,
       'CallableController',
       `completed in ${timeDifferenceInSeconds(

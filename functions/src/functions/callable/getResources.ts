@@ -7,5 +7,5 @@ import { https } from 'firebase-functions'
  */
 
 export const getResources = https.onCall((data, context) => {
-  
+  console.log('in getResources')
 })

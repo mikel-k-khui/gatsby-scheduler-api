@@ -1,2 +1,1 @@
-export { Appointment } from './model
-'
+export { Appointment } from './model'
