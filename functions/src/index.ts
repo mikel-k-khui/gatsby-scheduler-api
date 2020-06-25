@@ -13,5 +13,5 @@ import * as admin from 'firebase-admin'
 
 admin.initializeApp()
 
-export { getAppointments, getResources } from './functions/callable'
+export { getAppointments, getSetups } from './functions/callable'
 export { userCreated } from './functions/triggers'

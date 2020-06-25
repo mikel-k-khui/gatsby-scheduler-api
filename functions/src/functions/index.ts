@@ -1,2 +1,2 @@
 export { userCreated } from './triggers'
-export { getAppointments, getResources } from './callable'
+export { getAppointments, getSetups } from './callable'

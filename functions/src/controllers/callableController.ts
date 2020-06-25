@@ -1,26 +1,33 @@
 import { v4 as uuid } from 'uuid'
-import { firestore } from 'firebase-admin'
-// import { Logger } from '../utils'
+import { auth, firestore } from 'firebase-admin'
+import { Logger } from '../utils'
 
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 export class CallableController {
   // field
   batch: FirebaseFirestore.WriteBatch
-  email: string
+  promises: Array<Promise<any>>
   startTime: Date
-  userId: string | undefined
+  uid: string | undefined
   uuid: string
 
   // constructor
-  constructor(email: string) {
+  constructor() {
     this.batch = firestore().batch()
-    this.email = email
+    this.promises = []
     this.startTime = new Date()
-    this.userId = this.checkAuthorization()
+    this.uid = undefined
     this.uuid = uuid()
   }
 
-  checkAuthorization(): string | undefined {
-    return '1234'
+  public async checkAuthorization(contextUid: string): Promise<void> {
+    try {
+      const userRecord: auth.UserRecord = await auth().getUser(contextUid)
+      this.uid = userRecord.uid
+    } catch (err) {
+      Logger.error(err, 'userRecord not found', 'CONTROLLER')
+      throw err
+    }
   }
 
   async commit(): Promise<FirebaseFirestore.WriteResult[]> {
@@ -29,7 +36,7 @@ export class CallableController {
     const results: FirebaseFirestore.WriteResult[] = await this.batch.commit()
     const endTime: Date = new Date()
 
-    console.log(
+    Logger.log(
       this.uuid,
       'CallableController',
       `completed in ${timeDifferenceInSeconds(

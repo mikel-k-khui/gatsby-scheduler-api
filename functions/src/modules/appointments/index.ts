@@ -1,1 +1,0 @@
-export { Appointment } from './model'

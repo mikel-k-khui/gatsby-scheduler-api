@@ -1,5 +1,5 @@
 import { firestore } from 'firebase-admin'
-import { USERS_COL } from '../../../constants'
+import { USERS_COL } from '../constants'
 
 // Start writing Firebase Functions
 // https://googleapis.dev/nodejs/firestore/latest/index.html
@@ -20,11 +20,17 @@ export class User {
     return User.getDoc(id).get()
   }
 
-  async getByEmail(email: string): Promise<any> {
+  async getByUid(
+    uid: string
+  ): Promise<FirebaseFirestore.DocumentData | undefined> {
     const userSnap: FirebaseFirestore.QuerySnapshot = await User.getCollection()
-      .where('email', '==', email)
+      .where('uid', '==', uid)
       .get()
 
     return userSnap.size === 1 ? userSnap.docs[0].data() : undefined
+  }
+
+  getAllByRole(role: string): Promise<FirebaseFirestore.QuerySnapshot> {
+    return User.getCollection().where('role', '==', role).get()
   }
 }
