@@ -25,7 +25,7 @@ export const getSetups = https.onCall(async (data, context) => {
     controller.promises.push(user.getAllByRole(ROLES.resource))
     controller.promises.push(Slot.getSlots())
 
-    const [resourceUsers,slots] = await Promise.all(controller.promises)
+    const [resourceUsers, slots] = await Promise.all(controller.promises)
 
     return {
       slots: sanitizeTimestamp({ ...slots.data() }),

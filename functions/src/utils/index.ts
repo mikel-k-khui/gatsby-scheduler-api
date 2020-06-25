@@ -1,9 +1,9 @@
-import { firebase } from 'firebase'
+import { firestore } from 'firebase'
 export { Logger } from './Logger'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function sanitizeTimestamp(target: any): any {
-  if (Array.isArray(target)) { 
+  if (Array.isArray(target)) {
     return target.map((item) => sanitizeTimestamp(item))
   } else if (target instanceof FirebaseFirestore.Timestamp) {
     return target.toDate()
@@ -13,7 +13,7 @@ export function sanitizeTimestamp(target: any): any {
     for (const [key, value] of Object.entries(target)) {
       transformed[key] = sanitizeTimestamp(value)
     }
-    return
+    return transformed
   }
   return target
 }
@@ -30,14 +30,14 @@ export function sanitizeDate(target: any): any {
   if (Array.isArray(target)) {
     return target.map((item) => sanitizeTimestamp(item))
   } else if (target instanceof Date) {
-    return firebase.fire
+    return firestore.Timestamp.fromDate(target)
   } else if (typeof target === 'object') {
     const transformed: Record<string, unknown> = {}
 
     for (const [key, value] of Object.entries(target)) {
       transformed[key] = sanitizeTimestamp(value)
     }
-    return
+    return transformed
   }
   return target
 }

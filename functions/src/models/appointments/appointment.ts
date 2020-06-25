@@ -1,12 +1,19 @@
 import { firestore } from 'firebase-admin'
 import { APPOINTMENTS_COL } from '../../constants'
 import { fortnight } from './utils'
+import { sanitizeDate } from '../../utils'
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
 
 export class Appointment {
+  maxDailyAppointments: number
+
+  constructor() {
+    this.maxDailyAppointments = 24
+  }
+
   private getCollection(): FirebaseFirestore.CollectionReference {
     return firestore().collection(APPOINTMENTS_COL)
   }
@@ -33,6 +40,9 @@ export class Appointment {
 
   public getFortnight(today: Date): Promise<FirebaseFirestore.QuerySnapshot> {
     const { startOfWeek, endOfNextWeek } = fortnight(today)
-    return this.getCollection().where('role', '>=', ).get()
+    return this.getCollection()
+      .where('date', '>=', sanitizeDate(startOfWeek))
+      .where('date', '<=', sanitizeDate(endOfNextWeek))
+      .get()
   }
 }

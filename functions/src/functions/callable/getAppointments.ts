@@ -1,8 +1,7 @@
 import { https } from 'firebase-functions'
-import { getDataFromQuery, Logger, sanitizeTimestamp } from '../../utils'
+import { Logger } from '../../utils'
 import { CallableController } from '../../controllers/callableController'
-import { firestore } from 'firebase-admin'
-import { ROLES, SLOTS_DOC, USERS_COL } from '../../constants'
+import { getAppointments as getAppointmentsLogic } from '../../models'
 /*
  * A callable function is the end point for web app to
  * This should pass through the controller for user validation first
@@ -21,22 +20,7 @@ export const getAppointments = https.onCall(async (data, context) => {
     }
 
     controller.checkAuthorization(context.auth.uid)
-
-    // get queries
-    controller.promises.push(firestore().doc(SLOTS_DOC).get())
-    controller.promises.push(
-      firestore()
-        .collection(USERS_COL)
-        .where('role', '==', ROLES.resource)
-        .get()
-    )
-
-    const [slots, resourceUsers] = await Promise.all(controller.promises)
-
-    return {
-      slots: sanitizeTimestamp({ ...slots.data() }),
-      resources: getDataFromQuery(resourceUsers)
-    }
+    return getAppointmentsLogic(data?.today)
   } catch (err) {
     Logger.error(controller.uuid, err, 'GETSETUPS')
     throw new https.HttpsError('unavailable', controller.uuid)
