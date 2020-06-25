@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "gatsby-scheduler-api",
+    "default": "gatsby-scheduler-api"
+  }
+}
