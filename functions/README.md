@@ -5,6 +5,7 @@ The database is created in Firebase. You can manually create data using the fire
 Alternatively, you can use the reset script provided in the utils folder under roots to reset the data.
 
 [Firebase SDK Reference](https://firebase.google.com/docs/reference/js)
+
 [Admin SDK Reference](https://firebase.google.com/docs/reference/admin/node)
 
 ## Seeding
@@ -123,7 +124,7 @@ Response | Description
   }
 ```
 
-### getResources
+### getSetup
 
 Returns a list of (fixed) resources from the users.
 
@@ -145,19 +146,31 @@ Response | Description
 
 `error` field is present in response body, then the request is considered failed, regardless of the HTTP status code.
 
-```array with 200
-[
-  {
-    "id": same as authentication uid,
-    "displayName": string [100 char],
-    "email": string,
-    "workHours"?: {
-      "1": boolean,...
-    },
-    "role": "resource" | null,
-    "biography"?: string [200 char] required if role="resource",
-    "createdAt": date,
-    "updatedAt"?: date,
-  },...
-]
+```setup with 200
+{
+  "resources":
+  [
+    {
+      "id": same as authentication uid,
+      "displayName": string [100 char],
+      "email": string,
+      "workHours"?: {
+        "1": boolean,
+        "2": boolean,
+        ...,
+        "24": boolean
+      },
+      "role": "resource" | null,
+      "biography"?: string [200 char] required if role="resource",
+      "createdAt": date,
+      "updatedAt"?: date,
+    },...
+  ],
+  "slots": {
+    "1": string - system 1st appointment,
+    "2": string,
+    ...,
+    "24": string
+  }
+}
 ```
