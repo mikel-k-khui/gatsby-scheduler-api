@@ -24,7 +24,7 @@ Input
 ``` json
 {
   "data": {
-    "today": Date
+    "today": Date-String
   }
 }
 ```

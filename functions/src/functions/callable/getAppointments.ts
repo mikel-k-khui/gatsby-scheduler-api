@@ -15,13 +15,19 @@ export const getAppointments = https.onCall(async (data, context) => {
 
     console.log('DEBUG :: what is in data?', data)
     // check there is no content in data
-    if (Object.keys(data).length !== 1 || !context.auth?.uid) {
+    if (Object.keys(data).length !== 1) {
       Logger.error(controller.uuid, 'data is incorrect', 'GETSETUPS')
       throw new https.HttpsError('invalid-argument', 'Incorrect requests')
     }
 
-    controller.checkAuthorization(context.auth.uid)
-    return getAppointmentsLogic(data?.today)
+    if (!context?.auth?.uid) {
+      Logger.error(controller.uuid, 'check authorization', 'GETSETUPS')
+      // throw new https.HttpsError('invalid-argument', 'Incorrect requests')
+    }
+
+    const todayDate = new Date(data.today)
+    // controller.checkAuthorization(context.auth.uid)
+    return getAppointmentsLogic(todayDate)
   } catch (err) {
     Logger.error(controller.uuid, err, 'GETSETUPS')
     throw new https.HttpsError('unavailable', controller.uuid)

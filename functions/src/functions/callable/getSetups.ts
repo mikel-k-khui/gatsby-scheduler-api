@@ -18,12 +18,12 @@ export const getSetups = https.onCall(async (data, context) => {
       throw new https.HttpsError('invalid-argument', 'Incorrect requests')
     }
 
-    if (!context.auth?.uid) {
+    if (!context?.auth?.uid) {
       Logger.error(controller.uuid, 'check authorization', 'GETSETUPS')
-      throw new https.HttpsError('invalid-argument', 'Incorrect requests')
+      // throw new https.HttpsError('invalid-argument', 'Incorrect requests')
     }
 
-    controller.checkAuthorization(context.auth.uid)
+    // controller.checkAuthorization(context.auth.uid)
 
     // get queries
     const user = new User()
