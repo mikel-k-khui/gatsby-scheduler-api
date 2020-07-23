@@ -27,7 +27,7 @@ export const getAppointments = https.onCall(async (data, context) => {
 
     const todayDate = new Date(data.today)
     // controller.checkAuthorization(context.auth.uid)
-    return getAppointmentsLogic(todayDate)
+    return getAppointmentsLogic(todayDate, controller)
   } catch (err) {
     Logger.error(controller.uuid, err, 'GETSETUPS')
     throw new https.HttpsError('unavailable', controller.uuid)

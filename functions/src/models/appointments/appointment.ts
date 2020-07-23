@@ -2,6 +2,7 @@ import { firestore } from 'firebase-admin'
 import { APPOINTMENTS_COL } from '../../constants'
 import { fortnight } from './utils'
 import { sanitizeDate } from '../../utils'
+import { Logger } from '../../utils/Logger'
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -38,11 +39,30 @@ export class Appointment {
     return appSnap.size === 1 ? appSnap.docs[0].data() : undefined
   }
 
-  public getFortnight(today: Date): Promise<FirebaseFirestore.QuerySnapshot> {
+  public async getFortnight(
+    today: Date,
+    uuid: string
+  ): Promise<FirebaseFirestore.QuerySnapshot> {
     const { startOfWeek, endOfNextWeek } = fortnight(today)
-    return this.getCollection()
-      .where('date', '>=', sanitizeDate(startOfWeek))
-      .where('date', '<=', sanitizeDate(endOfNextWeek))
-      .get()
+    const startOfWeekTimestamp: firestore.Timestamp = sanitizeDate(startOfWeek)
+
+    console.log(
+      'DEBUG :: what is startOfWeek',
+      startOfWeek,
+      'and timestampe',
+      startOfWeekTimestamp
+    )
+    let result
+
+    try {
+      result = await this.getCollection()
+        .where('date', '>=', startOfWeekTimestamp)
+        // .where('date', '<=', sanitizeDate(endOfNextWeek))
+        .get()
+    } catch (err) {
+      Logger.error(uuid, 'Cannot get collection by where', 'APPOINTMENT')
+    }
+
+    return result
   }
 }
