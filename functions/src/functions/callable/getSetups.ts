@@ -13,8 +13,13 @@ export const getSetups = https.onCall(async (data, context) => {
   const controller: CallableController = new CallableController()
   try {
     // check there is no content in data
-    if (Object.keys(data).length !== 0 || !context.auth?.uid) {
+    if (Object.keys(data).length !== 0) {
       Logger.error(controller.uuid, 'data should be empty', 'GETSETUPS')
+      throw new https.HttpsError('invalid-argument', 'Incorrect requests')
+    }
+
+    if (!context.auth?.uid) {
+      Logger.error(controller.uuid, 'check authorization', 'GETSETUPS')
       throw new https.HttpsError('invalid-argument', 'Incorrect requests')
     }
 

@@ -5,7 +5,7 @@ export { Logger } from './Logger'
 export function sanitizeTimestamp(target: any): any {
   if (Array.isArray(target)) {
     return target.map((item) => sanitizeTimestamp(item))
-  } else if (target instanceof FirebaseFirestore.Timestamp) {
+  } else if (target instanceof firestore.Timestamp) {
     return target.toDate()
   } else if (typeof target === 'object') {
     const transformed: Record<string, unknown> = {}

@@ -13,6 +13,7 @@ export const getAppointments = https.onCall(async (data, context) => {
   try {
     // TODO: add hapi.joi for validation
 
+    console.log('DEBUG :: what is in data?', data)
     // check there is no content in data
     if (Object.keys(data).length !== 1 || !context.auth?.uid) {
       Logger.error(controller.uuid, 'data is incorrect', 'GETSETUPS')
